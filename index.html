@@ -1,1 +1,645 @@
- 
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수학 선생님 홈페이지</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2em;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 10px;
+            padding: 15px 25px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            text-align: center;
+        }
+
+        .calculator {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .calc-display {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            text-align: right;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+            min-height: 50px;
+        }
+
+        .calc-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .calc-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .calc-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .calc-btn.operator {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+        }
+
+        .calc-btn.equals {
+            background: linear-gradient(135deg, #4ecdc4, #6ee7df);
+        }
+
+        .graph-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            height: 300px;
+            position: relative;
+        }
+
+        .graph-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .graph-input input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .graph-input button {
+            background: linear-gradient(135deg, #4ecdc4, #6ee7df);
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .formula-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .formula-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .formula-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .formula-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .formula-desc {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .clock {
+            text-align: center;
+            color: white;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .todo-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .todo-item {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .todo-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .todo-item.completed {
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
+
+        .add-todo {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .add-todo input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .add-todo button {
+            background: linear-gradient(135deg, #4ecdc4, #6ee7df);
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>수학 선생님 홈페이지</h1>
+            <p>학생들과 함께하는 즐거운 수학 학습</p>
+        </div>
+
+        <div class="nav">
+            <button class="nav-btn active" onclick="showSection('calculator')">계산기</button>
+            <button class="nav-btn" onclick="showSection('graph')">함수 그래프</button>
+            <button class="nav-btn" onclick="showSection('formulas')">수학 공식</button>
+            <button class="nav-btn" onclick="showSection('todo')">할 일 관리</button>
+        </div>
+
+        <div class="content">
+            <!-- 계산기 섹션 -->
+            <div class="card" id="calculator-section">
+                <h3>🧮 계산기</h3>
+                <div class="calculator">
+                    <div class="calc-display" id="calc-display">0</div>
+                    <div class="calc-buttons">
+                        <button class="calc-btn" onclick="calcClear()">AC</button>
+                        <button class="calc-btn" onclick="calcDelete()">DEL</button>
+                        <button class="calc-btn operator" onclick="calcOperation('÷')">÷</button>
+                        <button class="calc-btn operator" onclick="calcOperation('×')">×</button>
+                        
+                        <button class="calc-btn" onclick="calcAppend('7')">7</button>
+                        <button class="calc-btn" onclick="calcAppend('8')">8</button>
+                        <button class="calc-btn" onclick="calcAppend('9')">9</button>
+                        <button class="calc-btn operator" onclick="calcOperation('-')">-</button>
+                        
+                        <button class="calc-btn" onclick="calcAppend('4')">4</button>
+                        <button class="calc-btn" onclick="calcAppend('5')">5</button>
+                        <button class="calc-btn" onclick="calcAppend('6')">6</button>
+                        <button class="calc-btn operator" onclick="calcOperation('+')">+</button>
+                        
+                        <button class="calc-btn" onclick="calcAppend('1')">1</button>
+                        <button class="calc-btn" onclick="calcAppend('2')">2</button>
+                        <button class="calc-btn" onclick="calcAppend('3')">3</button>
+                        <button class="calc-btn equals" onclick="calcCompute()">=</button>
+                        
+                        <button class="calc-btn" style="grid-column: span 2;" onclick="calcAppend('0')">0</button>
+                        <button class="calc-btn" onclick="calcAppend('.')">.</button>
+                        <button class="calc-btn operator" onclick="calcOperation('%')">%</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 함수 그래프 섹션 -->
+            <div class="card" id="graph-section" style="display: none;">
+                <h3>📈 함수 그래프</h3>
+                <div class="graph-input">
+                    <input type="text" id="function-input" placeholder="예: x^2, x^3, sin(x)" value="x^2">
+                    <button onclick="drawGraph()">그래프 그리기</button>
+                </div>
+                <div class="graph-container">
+                    <canvas id="graph-canvas" width="300" height="250"></canvas>
+                </div>
+            </div>
+
+            <!-- 수학 공식 섹션 -->
+            <div class="card" id="formulas-section" style="display: none;">
+                <h3>📚 수학 공식</h3>
+                <ul class="formula-list">
+                    <li class="formula-item" onclick="showFormula('quadratic')">
+                        <div class="formula-title">이차방정식</div>
+                        <div class="formula-desc">ax² + bx + c = 0</div>
+                    </li>
+                    <li class="formula-item" onclick="showFormula('pythagoras')">
+                        <div class="formula-title">피타고라스 정리</div>
+                        <div class="formula-desc">a² + b² = c²</div>
+                    </li>
+                    <li class="formula-item" onclick="showFormula('circle')">
+                        <div class="formula-title">원의 넓이</div>
+                        <div class="formula-desc">A = πr²</div>
+                    </li>
+                    <li class="formula-item" onclick="showFormula('sphere')">
+                        <div class="formula-title">구의 부피</div>
+                        <div class="formula-desc">V = (4/3)πr³</div>
+                    </li>
+                    <li class="formula-item" onclick="showFormula('derivative')">
+                        <div class="formula-title">미분 공식</div>
+                        <div class="formula-desc">d/dx(xⁿ) = nxⁿ⁻¹</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 할 일 관리 섹션 -->
+            <div class="card" id="todo-section" style="display: none;">
+                <h3>📝 할 일 관리</h3>
+                <div class="clock" id="clock"></div>
+                <div class="add-todo">
+                    <input type="text" id="todo-input" placeholder="할 일을 입력하세요">
+                    <button onclick="addTodo()">추가</button>
+                </div>
+                <ul class="todo-list" id="todo-list">
+                    <li class="todo-item">
+                        <input type="checkbox" onchange="toggleTodo(this)">
+                        <span>수학 시험 채점하기</span>
+                    </li>
+                    <li class="todo-item">
+                        <input type="checkbox" onchange="toggleTodo(this)">
+                        <span>다음 주 수업 준비</span>
+                    </li>
+                    <li class="todo-item">
+                        <input type="checkbox" onchange="toggleTodo(this)">
+                        <span>학생 상담 일정 확인</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2024 수학 선생님 홈페이지 - 학생들과 함께하는 즐거운 수학 학습</p>
+        </div>
+    </div>
+
+    <script>
+        // 계산기 기능
+        let calcCurrentOperand = '0';
+        let calcPreviousOperand = '';
+        let calcOperation = undefined;
+
+        function calcAppend(number) {
+            if (number === '.' && calcCurrentOperand.includes('.')) return;
+            if (calcCurrentOperand === '0' && number !== '.') {
+                calcCurrentOperand = number;
+            } else {
+                calcCurrentOperand = calcCurrentOperand.toString() + number;
+            }
+            updateCalcDisplay();
+        }
+
+        function calcOperation(operation) {
+            if (calcCurrentOperand === '0') return;
+            if (calcPreviousOperand !== '') {
+                calcCompute();
+            }
+            calcOperation = operation;
+            calcPreviousOperand = calcCurrentOperand;
+            calcCurrentOperand = '0';
+        }
+
+        function calcCompute() {
+            let computation;
+            const prev = parseFloat(calcPreviousOperand);
+            const current = parseFloat(calcCurrentOperand);
+            if (isNaN(prev) || isNaN(current)) return;
+
+            switch (calcOperation) {
+                case '+': computation = prev + current; break;
+                case '-': computation = prev - current; break;
+                case '×': computation = prev * current; break;
+                case '÷': 
+                    if (current === 0) {
+                        alert('0으로 나눌 수 없습니다!');
+                        return;
+                    }
+                    computation = prev / current; 
+                    break;
+                case '%': computation = prev % current; break;
+                default: return;
+            }
+
+            calcCurrentOperand = computation;
+            calcOperation = undefined;
+            calcPreviousOperand = '';
+            updateCalcDisplay();
+        }
+
+        function calcClear() {
+            calcCurrentOperand = '0';
+            calcPreviousOperand = '';
+            calcOperation = undefined;
+            updateCalcDisplay();
+        }
+
+        function calcDelete() {
+            if (calcCurrentOperand === '0') return;
+            calcCurrentOperand = calcCurrentOperand.toString().slice(0, -1);
+            if (calcCurrentOperand === '') calcCurrentOperand = '0';
+            updateCalcDisplay();
+        }
+
+        function updateCalcDisplay() {
+            document.getElementById('calc-display').textContent = calcCurrentOperand;
+        }
+
+        // 네비게이션 기능
+        function showSection(section) {
+            // 모든 섹션 숨기기
+            document.querySelectorAll('.card').forEach(card => {
+                card.style.display = 'none';
+            });
+            
+            // 모든 버튼 비활성화
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // 선택된 섹션 보이기
+            document.getElementById(section + '-section').style.display = 'block';
+            
+            // 선택된 버튼 활성화
+            event.target.classList.add('active');
+            
+            // 그래프 섹션이 활성화되면 그래프 그리기
+            if (section === 'graph') {
+                setTimeout(drawGraph, 100);
+            }
+        }
+
+        // 그래프 기능
+        function drawGraph() {
+            const canvas = document.getElementById('graph-canvas');
+            const ctx = canvas.getContext('2d');
+            const functionStr = document.getElementById('function-input').value.toLowerCase();
+            
+            // 캔버스 초기화
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 축 그리기
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height/2);
+            ctx.lineTo(canvas.width, canvas.height/2);
+            ctx.moveTo(canvas.width/2, 0);
+            ctx.lineTo(canvas.width/2, canvas.height);
+            ctx.stroke();
+            
+            // 함수 그래프 그리기
+            ctx.strokeStyle = '#ff6b6b';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            
+            let firstPoint = true;
+            
+            for (let x = -5; x <= 5; x += 0.1) {
+                try {
+                    let y;
+                    
+                    if (functionStr.includes('x^2')) {
+                        y = x * x;
+                    } else if (functionStr.includes('x^3')) {
+                        y = x * x * x;
+                    } else if (functionStr.includes('sin')) {
+                        y = Math.sin(x);
+                    } else if (functionStr.includes('cos')) {
+                        y = Math.cos(x);
+                    } else {
+                        y = x * x; // 기본값
+                    }
+                    
+                    const canvasX = (x + 5) * (canvas.width / 10);
+                    const canvasY = canvas.height/2 - y * 20;
+                    
+                    if (firstPoint) {
+                        ctx.moveTo(canvasX, canvasY);
+                        firstPoint = false;
+                    } else {
+                        ctx.lineTo(canvasX, canvasY);
+                    }
+                } catch (e) {
+                    console.log('함수 계산 오류:', e);
+                }
+            }
+            ctx.stroke();
+        }
+
+        // 공식 표시 기능
+        function showFormula(type) {
+            let message = '';
+            switch(type) {
+                case 'quadratic':
+                    message = '이차방정식 ax² + bx + c = 0\n해: x = (-b ± √(b² - 4ac)) / 2a';
+                    break;
+                case 'pythagoras':
+                    message = '피타고라스 정리\n직각삼각형에서 a² + b² = c²';
+                    break;
+                case 'circle':
+                    message = '원의 넓이: A = πr²\n원의 둘레: C = 2πr';
+                    break;
+                case 'sphere':
+                    message = '구의 부피: V = (4/3)πr³\n구의 표면적: A = 4πr²';
+                    break;
+                case 'derivative':
+                    message = '미분 공식\nd/dx(xⁿ) = nxⁿ⁻¹\nd/dx(sin x) = cos x\nd/dx(cos x) = -sin x';
+                    break;
+            }
+            alert(message);
+        }
+
+        // 할 일 관리 기능
+        function addTodo() {
+            const input = document.getElementById('todo-input');
+            const text = input.value.trim();
+            if (text === '') return;
+            
+            const todoList = document.getElementById('todo-list');
+            const li = document.createElement('li');
+            li.className = 'todo-item';
+            li.innerHTML = `
+                <input type="checkbox" onchange="toggleTodo(this)">
+                <span>${text}</span>
+            `;
+            todoList.appendChild(li);
+            input.value = '';
+        }
+
+        function toggleTodo(checkbox) {
+            const todoItem = checkbox.parentElement;
+            if (checkbox.checked) {
+                todoItem.classList.add('completed');
+            } else {
+                todoItem.classList.remove('completed');
+            }
+        }
+
+        // 시계 기능
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('ko-KR', {
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('clock').textContent = timeString;
+        }
+
+        // 초기화
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // Enter 키로 할 일 추가
+        document.getElementById('todo-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addTodo();
+            }
+        });
+
+        // 페이지 로드 시 그래프 그리기
+        window.addEventListener('load', function() {
+            setTimeout(drawGraph, 100);
+        });
+    </script>
+</body>
+</html>
